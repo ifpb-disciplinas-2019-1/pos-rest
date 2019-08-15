@@ -1,7 +1,7 @@
 package br.ifpb.pos.infra;
 
-import br.ifpb.pos.domain.Cliente;
-import br.ifpb.pos.domain.Clientes;
+import br.ifpb.pos.domain.cliente.Cliente;
+import br.ifpb.pos.domain.cliente.Clientes;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,5 +32,17 @@ public class ClientesEmJPA implements Clientes {
     @Override
     public Cliente localizarPorCpf(String cpf) {
         return em.find(Cliente.class,cpf);
+    }
+
+    @Override
+    public void remover(Cliente cliente) {
+        em.remove(
+            em.merge(cliente)
+        );
+    }
+
+    @Override
+    public void atualizar(Cliente cliente) {
+        em.merge(cliente);
     }
 }

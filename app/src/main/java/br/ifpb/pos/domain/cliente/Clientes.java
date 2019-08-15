@@ -1,4 +1,4 @@
-package br.ifpb.pos.domain;
+package br.ifpb.pos.domain.cliente;
 
 import java.util.List;
 
@@ -14,4 +14,8 @@ public interface Clientes {
     public Cliente localizarPorCpf(String cpf);
 
     public List<Cliente> todos();
+
+    public void remover(Cliente cliente);
+
+    public void atualizar(Cliente resposta);
 }

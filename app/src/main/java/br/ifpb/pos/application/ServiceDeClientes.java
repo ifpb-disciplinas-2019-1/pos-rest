@@ -1,7 +1,7 @@
 package br.ifpb.pos.application;
 
-import br.ifpb.pos.domain.Cliente;
-import br.ifpb.pos.domain.Clientes;
+import br.ifpb.pos.domain.cliente.Cliente;
+import br.ifpb.pos.domain.cliente.Clientes;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.Stateless;
@@ -34,6 +34,36 @@ public class ServiceDeClientes {
     }
 
     public Cliente localizaClientePorCPF(String cpf) {
-        return this.clientes.localizarPorCpf(cpf);
+        Cliente cliente = this.clientes.localizarPorCpf(cpf);
+
+        if (cliente == null) {
+            return Cliente.empty();
+        }
+        return cliente;
+    }
+
+    public void removerCliente(String cpf) {
+        Objects.requireNonNull(cpf,"CPF precisa ser preenchido");
+        Cliente cliente = localizaClientePorCPF(cpf);
+        if (cliente.isEmpty()) {
+            return;
+        }
+        this.clientes.remover(cliente);
+    }
+
+    public Cliente atualizar(String cpf,Cliente cliente) {
+        Objects.requireNonNull(cpf,"CPF precisa ser preenchido");
+        Cliente resposta = localizaClientePorCPF(cpf);
+        
+        if (resposta.isEmpty()) {
+            return Cliente.empty();
+        }
+//        if (!cpf.equals(cliente.getCpf())) {
+//            return Cliente.empty();
+//        }
+        cliente.setCpf(cpf);
+        this.clientes.atualizar(cliente);
+        // recurso atualizado
+        return localizaClientePorCPF(cpf);
     }
 }
