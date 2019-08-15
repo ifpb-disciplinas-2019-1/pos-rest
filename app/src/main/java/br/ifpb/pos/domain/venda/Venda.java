@@ -1,10 +1,12 @@
 package br.ifpb.pos.domain.venda;
 
 import br.ifpb.pos.domain.cliente.Cliente;
+import br.ifpb.pos.domain.produto.Produto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -29,7 +31,7 @@ public class Venda implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
-    //private List<Produtos> produtos;
+    private List<Produto> produtos;
     public Venda() {
         this.criadaEm = Date.from(Instant.now());
         this.codigo = UUID.randomUUID().toString();
@@ -67,4 +69,12 @@ public class Venda implements Serializable {
         this.cliente = cliente;
     }
 
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+    
 }

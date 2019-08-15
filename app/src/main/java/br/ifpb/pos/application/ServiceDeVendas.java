@@ -2,6 +2,8 @@ package br.ifpb.pos.application;
 
 import br.ifpb.pos.domain.cliente.Cliente;
 import br.ifpb.pos.domain.cliente.Clientes;
+import br.ifpb.pos.domain.produto.Produto;
+import br.ifpb.pos.domain.produto.Produtos;
 import br.ifpb.pos.domain.venda.Venda;
 import br.ifpb.pos.domain.venda.Vendas;
 import java.util.List;
@@ -21,6 +23,9 @@ public class ServiceDeVendas {
 
     @Inject
     private Clientes clientes;
+    
+    @Inject
+    private Produtos produtos;
 
     public Venda novaVenda() {
         return this.vendas.nova();
@@ -40,4 +45,13 @@ public class ServiceDeVendas {
         venda.setCliente(cliente);
         return this.vendas.atualizar(venda);
     }
+    
+    public Venda adicionarProdutoAVenda(String uuid,double preco) {
+        Venda venda = this.vendas.localizarCom(uuid);
+        venda.setProdutos(
+                this.produtos.pesquisarPorPreco(preco)
+        );
+        return this.vendas.atualizar(venda);
+    }
+    
 }
