@@ -35,7 +35,7 @@ public class ProdutosEmJPA implements Produtos {
     
      @Override
     public List<Produto> pesquisarPorPreco(double preco){
-        return em.createQuery("FROM Produto p WHERE preco = " + preco,Produto.class)
+        return em.createQuery("FROM Produto p WHERE preco = " + preco, Produto.class)
             .getResultList();
     }
     

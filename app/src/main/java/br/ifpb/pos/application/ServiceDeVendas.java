@@ -23,7 +23,7 @@ public class ServiceDeVendas {
 
     @Inject
     private Clientes clientes;
-    
+
     @Inject
     private Produtos produtos;
 
@@ -45,13 +45,14 @@ public class ServiceDeVendas {
         venda.setCliente(cliente);
         return this.vendas.atualizar(venda);
     }
-    
+
     public Venda adicionarProdutoAVenda(String uuid,double preco) {
         Venda venda = this.vendas.localizarCom(uuid);
+        
         venda.setProdutos(
-                this.produtos.pesquisarPorPreco(preco)
+            this.produtos.pesquisarPorPreco(preco)
         );
         return this.vendas.atualizar(venda);
     }
-    
+
 }

@@ -76,6 +76,9 @@ public class ResourceVendas {
             .entity(venda)
             .build();
     }
+    
+//    TODO: GET /finalizar -> criar um status: CRIADA, ANDAMENTO, FINALIZADA
+//    TODO: PUT
 //    @PUT
 //    @Path("{uuid}/produto/{codigoProduto}")
 //    public Response adicionarProduto(

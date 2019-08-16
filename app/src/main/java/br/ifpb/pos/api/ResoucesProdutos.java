@@ -50,7 +50,7 @@ public class ResoucesProdutos {
     }
     
     @GET
-    @Path("{descricao}")
+    @Path("descricao/{descricao}")
     public Response produtoDescricao(@PathParam("descricao") String descricao) {
         Produto produto = this.service.localizaPorDescricao(descricao);
         return Response.ok()
@@ -59,7 +59,7 @@ public class ResoucesProdutos {
     }
     
     @GET
-    @Path("{valor}")
+    @Path("valor/{valor}")
     public Response produtoDescricao(@PathParam("valor") Double valor) {
         List<Produto> produtos = this.service.pesquisarPorPreco(valor);
         
@@ -86,4 +86,8 @@ public class ResoucesProdutos {
             URI.create(uri)
         ).build();
     }
+    
+    // TODO: PUT
+    // TODO: DELETE
+    // TODO: GET pelo codigo
 }

@@ -2,6 +2,7 @@ package br.ifpb.pos.domain.produto;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -12,15 +13,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @XmlRootElement
 public class Produto implements Serializable {
-    
+
     @Id
+    @GeneratedValue
     private int codigo;
     private String descricao;
     private double valor;
 
-    public Produto() { }
+    public Produto() {
+    }
 
-    public Produto(int codigo, String descricao, double valor) {
+    public Produto(int codigo,String descricao,double valor) {
         this.codigo = codigo;
         this.descricao = descricao;
         this.valor = valor;
@@ -49,5 +52,5 @@ public class Produto implements Serializable {
     public void setValor(double valor) {
         this.valor = valor;
     }
-        
+
 }
