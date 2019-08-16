@@ -1,5 +1,6 @@
 package br.ifpb.pos.infra;
 
+import br.ifpb.pos.domain.venda.Status;
 import br.ifpb.pos.domain.venda.Venda;
 import br.ifpb.pos.domain.venda.Vendas;
 import java.util.List;
@@ -27,7 +28,8 @@ public class VendasEmJPA implements Vendas {
 
     @Override
     public List<Venda> todas() {
-        return em.createQuery("FROM Venda v",Venda.class)
+        return em.createQuery("FROM Venda v WHERE v.status<>:status",Venda.class)
+            .setParameter("status",Status.CANCELADA)
             .getResultList();
     }
 

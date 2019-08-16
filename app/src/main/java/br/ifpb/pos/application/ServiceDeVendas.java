@@ -7,6 +7,7 @@ import br.ifpb.pos.domain.produto.Produtos;
 import br.ifpb.pos.domain.venda.Venda;
 import br.ifpb.pos.domain.venda.Vendas;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -46,9 +47,16 @@ public class ServiceDeVendas {
         return this.vendas.atualizar(venda);
     }
 
+    public void cancelarVenda(String uuid) {
+        Objects.requireNonNull(uuid,"Venda inexistente");
+        Venda venda = this.vendas.localizarCom(uuid);
+        venda.calcelar();
+        this.vendas.atualizar(venda);
+    }
+
     public Venda adicionarProdutoAVenda(String uuid,double preco) {
         Venda venda = this.vendas.localizarCom(uuid);
-        
+
         venda.setProdutos(
             this.produtos.pesquisarPorPreco(preco)
         );

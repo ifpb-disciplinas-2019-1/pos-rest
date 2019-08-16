@@ -9,10 +9,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.ws.rs.core.UriInfo;
 
 /**
  * @author Ricardo Job
@@ -31,10 +35,24 @@ public class Venda implements Serializable {
     @ManyToOne
     private Cliente cliente;
 
+    @OneToMany
     private List<Produto> produtos;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     public Venda() {
         this.criadaEm = Date.from(Instant.now());
         this.codigo = UUID.randomUUID().toString();
+        this.status = Status.ANDAMENTO;
+    }
+
+    public void finalizar() {
+        this.status = Status.FINALIZADA;
+    }
+
+    public void calcelar() {
+        this.status = Status.CANCELADA;
     }
 
     public String getCodigo() {
@@ -76,5 +94,18 @@ public class Venda implements Serializable {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
-    
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+//    
+
+    public VendaValue parse(UriInfo uriInfo) {
+        return new VendaValue(this,uriInfo);
+    }
+
 }

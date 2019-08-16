@@ -2,11 +2,13 @@ package br.ifpb.pos.api;
 
 import br.ifpb.pos.application.ServiceDeVendas;
 import br.ifpb.pos.domain.venda.Venda;
+import br.ifpb.pos.domain.venda.VendaValue;
 import java.net.URI;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -59,11 +61,14 @@ public class ResourceVendas {
 
     @GET
     @Path("{uuid}")
-    public Response porUUID(@PathParam("uuid") String uuid) {
+    public Response porUUID(@PathParam("uuid") String uuid,@Context UriInfo uriInfo) {
         Venda venda = this.service.localizaVendaPorUUID(uuid);
+
+        //VendaValue vendaValue = new VendaValue(venda,uriInfo);
         return Response.ok()
-            .entity(venda)
-            .build();
+            .entity(
+                venda.parse(uriInfo)
+            ).build();
     }
 
     @PUT
@@ -76,7 +81,15 @@ public class ResourceVendas {
             .entity(venda)
             .build();
     }
-    
+
+    @DELETE
+    @Path("{uuid}")
+    public Response cancelar(@PathParam("uuid") String uuid) {
+        this.service.cancelarVenda(uuid);
+        return Response.noContent()
+            .build();
+    }
+
 //    TODO: GET /finalizar -> criar um status: CRIADA, ANDAMENTO, FINALIZADA
 //    TODO: PUT
 //    @PUT
