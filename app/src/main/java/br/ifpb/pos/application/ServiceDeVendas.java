@@ -26,7 +26,7 @@ public class ServiceDeVendas {
 
     @Inject
     private Produtos produtos;
-
+    
     public Venda novaVenda() {
         return this.vendas.nova();
     }
@@ -46,13 +46,29 @@ public class ServiceDeVendas {
         return this.vendas.atualizar(venda);
     }
 
-    public Venda adicionarProdutoAVenda(String uuid,double preco) {
+    public Venda adicionarProdutoAVenda(String uuid,int codigo) {
         Venda venda = this.vendas.localizarCom(uuid);
-        
+        Produto p = produtos.pesquisarPorCodigo(codigo);
         venda.setProdutos(
-            this.produtos.pesquisarPorPreco(preco)
+                this.adicionarProdutoLista(venda,p)
         );
         return this.vendas.atualizar(venda);
+    }
+    
+    public List<Produto> adicionarProdutoLista(Venda venda, Produto produto){
+        List<Produto> listaProdutos = venda.getProdutos();
+        listaProdutos.add(produto);
+        return listaProdutos;
+    }
+    
+    public Venda cancelarVenda(String uuid) {
+        Venda venda = this.vendas.localizarCom(uuid);
+        return this.vendas.cancelar(venda);
+    }
+
+    public Venda finalizarVenda(String uuid) {
+        Venda venda = this.vendas.localizarCom(uuid);
+        return this.vendas.finalizar(venda);
     }
 
 }

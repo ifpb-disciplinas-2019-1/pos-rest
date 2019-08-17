@@ -1,5 +1,6 @@
 package br.ifpb.pos.infra;
 
+import br.ifpb.pos.domain.venda.Status;
 import br.ifpb.pos.domain.venda.Venda;
 import br.ifpb.pos.domain.venda.Vendas;
 import java.util.List;
@@ -38,6 +39,18 @@ public class VendasEmJPA implements Vendas {
 
     @Override
     public Venda atualizar(Venda venda) {
+        return em.merge(venda);
+    }
+
+    @Override
+    public Venda cancelar(Venda venda) {
+        venda.setStatus(Status.CANCELADA);
+        return em.merge(venda);
+    }
+    
+    @Override
+    public Venda finalizar(Venda venda) {
+        venda.setStatus(Status.FINALIZADA);
         return em.merge(venda);
     }
 

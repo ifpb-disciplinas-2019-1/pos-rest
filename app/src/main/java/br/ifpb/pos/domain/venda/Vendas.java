@@ -9,7 +9,6 @@ import java.util.List;
  */
 public interface Vendas {
 
-    
     public Venda nova();
 
     public List<Venda> todas();
@@ -17,4 +16,9 @@ public interface Vendas {
     public Venda localizarCom(String uuid);
 
     public Venda atualizar(Venda venda);
+    
+    public Venda cancelar(Venda venda);
+    
+    public Venda finalizar(Venda venda);
+    
 }

@@ -30,11 +30,13 @@ public class Venda implements Serializable {
 
     @ManyToOne
     private Cliente cliente;
-
     private List<Produto> produtos;
+    private Status status;
+    
     public Venda() {
         this.criadaEm = Date.from(Instant.now());
         this.codigo = UUID.randomUUID().toString();
+        this.status = status.ANDAMENTO;
     }
 
     public String getCodigo() {
@@ -75,6 +77,14 @@ public class Venda implements Serializable {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
     
 }

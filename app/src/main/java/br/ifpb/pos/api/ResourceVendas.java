@@ -77,15 +77,30 @@ public class ResourceVendas {
             .build();
     }
     
-//    TODO: GET /finalizar -> criar um status: CRIADA, ANDAMENTO, FINALIZADA
 //    TODO: PUT
-//    @PUT
-//    @Path("{uuid}/produto/{codigoProduto}")
-//    public Response adicionarProduto(
-//        @PathParam("uuid") String uuid,
-//        @PathParam("codigoProduto") String codigoProduto) {
-//        
-//        return Response.ok()
-//            .build();
-//    }
+    @PUT
+    @Path("{uuid}/produto/{codigoProduto}")
+    public Response adicionarProduto(
+        @PathParam("uuid") String uuid,
+        @PathParam("codigoProduto") int codigoProduto) {
+         Venda venda = this.service.adicionarProdutoAVenda(uuid,codigoProduto);
+        return Response.ok()
+            .entity(venda)
+            .build();
+    }
+    
+    public Response cancelar(@PathParam("uuid") String uuid) {
+         Venda venda = this.service.cancelarVenda(uuid);
+        return Response.ok()
+            .entity(venda)
+            .build();
+    }
+    
+    //    TODO: GET /finalizar -> criar um status: CRIADA, ANDAMENTO, FINALIZADA
+    public Response finalizar(@PathParam("uuid") String uuid) {
+         Venda venda = this.service.finalizarVenda(uuid);
+        return Response.ok()
+            .entity(venda)
+            .build();
+    }
 }

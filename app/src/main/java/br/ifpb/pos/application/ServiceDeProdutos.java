@@ -14,32 +14,40 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Tyathian
+ * @author JuliermeH
  */
 @Stateless
 public class ServiceDeProdutos {
     
     @Inject
-    private Produtos produto;
+    private Produtos produtos;
     
-    public void criarNovoCliente(int codigo, String descricao, double valor) {
+    public void criarNovoProduto(int codigo, String descricao, double valor) {
         Objects.requireNonNull(descricao,"Descrição precisa ser preenchido");
         Produto p = new Produto(
                 codigo, descricao, valor
         );
-        produto.novo(p);
+        produtos.novo(p);
     }
 
     public List<Produto> todos() {
-        return this.produto.todosProdutos();
+        return this.produtos.todosProdutos();
     }
     
-    public List<Produto> pesquisarPorPreco(double valor) {
-        return this.produto.pesquisarPorPreco(valor);
+    public Produto pesquisarPorcodigo(int codigo) {
+        return this.produtos.pesquisarPorCodigo(codigo);
     }
 
     public Produto localizaPorDescricao(String descricao) {
-        return this.produto.localizarPorDescricao(descricao);
+        return this.produtos.localizarPorDescricao(descricao);
+    }
+    
+    public Produto atualizarProduto(Produto produto) {
+        return this.produtos.atualizar(produto);
+    }
+    
+    public void removerProduto(Produto produto) {
+        this.produtos.remover(produto);
     }
     
 }
