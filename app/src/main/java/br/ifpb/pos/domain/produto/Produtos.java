@@ -14,5 +14,10 @@ public interface Produtos {
 
     public List<Produto> todosProdutos();
     
-    public List<Produto> pesquisarPorPreco(double preco);
+    public Produto pesquisarPorCodigo(int codigo);
+    
+    public Produto atualizar(Produto produto);
+    
+    public void remover(Produto p);
+    
 }

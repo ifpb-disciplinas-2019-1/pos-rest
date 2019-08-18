@@ -43,4 +43,16 @@ public class VendasEmJPA implements Vendas {
         return em.merge(venda);
     }
 
+    @Override
+    public Venda cancelar(Venda venda) {
+        venda.setStatus(Status.CANCELADA);
+        return em.merge(venda);
+    }
+    
+    @Override
+    public Venda finalizar(Venda venda) {
+        venda.setStatus(Status.FINALIZADA);
+        return em.merge(venda);
+    }
+
 }

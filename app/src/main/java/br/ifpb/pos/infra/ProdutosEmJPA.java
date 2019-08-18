@@ -26,17 +26,26 @@ public class ProdutosEmJPA implements Produtos {
     public Produto localizarPorDescricao(String descricao){
         return em.find(Produto.class,descricao);
     }
+    
+    @Override
+    public Produto pesquisarPorCodigo(int codigo){
+        return em.find(Produto.class, codigo);
+    }
 
-     @Override
+    @Override
     public List<Produto> todosProdutos() {
         return em.createQuery("FROM Produto p",Produto.class)
             .getResultList();
     }
     
-     @Override
-    public List<Produto> pesquisarPorPreco(double preco){
-        return em.createQuery("FROM Produto p WHERE preco = " + preco, Produto.class)
-            .getResultList();
+    @Override
+    public Produto atualizar(Produto produto) {
+        return em.merge(produto);
+    }
+
+    @Override
+    public void remover(Produto produto) {
+        em.remove(produto);
     }
     
 }

@@ -15,6 +15,8 @@ import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -24,7 +26,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Tyathian
+ * @author JuliermeH
  */
 @Stateless
 
@@ -58,25 +60,20 @@ public class ResoucesProdutos {
             .build();
     }
     
+    // TODO: GET pelo codigo
     @GET
-    @Path("valor/{valor}")
-    public Response produtoDescricao(@PathParam("valor") Double valor) {
-        List<Produto> produtos = this.service.pesquisarPorPreco(valor);
-        
-        GenericEntity<List<Produto>> entity = new GenericEntity<
-                List<Produto>>(
-                    produtos) {
-        };
-        
+    @Path("codigo/{codigo}")
+    public Response produtoCodigo(@PathParam("codigo") int codigo) {
+        Produto p = this.service.pesquisarPorcodigo(codigo);
         return Response.ok()
-            .entity(produtos)
+            .entity(p)
             .build();
     }
     
     @POST
     public Response novo(JsonObject object) {
 
-        this.service.criarNovoCliente(
+        this.service.criarNovoProduto(
             object.getInt("codigo"),
             object.getString("descricao"),
             object.getInt("valor")
@@ -88,6 +85,25 @@ public class ResoucesProdutos {
     }
     
     // TODO: PUT
+    @PUT
+    public Response atualizar(JsonObject object){
+        this.service.criarNovoProduto(
+            object.getInt("codigo"),
+            object.getString("descricao"),
+            object.getInt("valor")
+        );
+        String uri = "http://localhost:8080/app/api/produtos/" + object.getInt("codigo");
+        return Response.ok(
+            URI.create(uri)
+        ).build();
+    }
+    
     // TODO: DELETE
-    // TODO: GET pelo codigo
+    @DELETE
+    @Path("codigo/{codigo}")
+    public void deletar(@PathParam("codigo") int codigo){
+        Produto produto = this.service.pesquisarPorcodigo(codigo);
+        this.service.removerProduto(produto);
+    }
+    
 }

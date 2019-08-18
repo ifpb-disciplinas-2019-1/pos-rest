@@ -102,10 +102,8 @@ public class Venda implements Serializable {
     public void setStatus(Status status) {
         this.status = status;
     }
-//    
 
     public VendaValue parse(UriInfo uriInfo) {
         return new VendaValue(this,uriInfo);
     }
-
 }
